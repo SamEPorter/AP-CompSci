@@ -1,29 +1,36 @@
-
 public class Cylinder {
     double height;
-    circleC = new Circle(
+    Circle c3;
+    
     public Cylinder() {
-        radius = 1;
+        height = 1;
+        c3 = new Circle(1);
     }
     
-    public Cylinder(double r) {
-        radius = r;
+    public Cylinder(double h, double b) {
+        height = h;
+        c3 = new Circle(b);
     }
     
     public String toString() {
-      return"Hello, I am a Cylinder with a radius of " + radius + ".";
-   
+        return "Hello, I am a cylinder with a radius of "+ c3.getRadius() + 
+        " and height of " + height + ". ";
+        
     }
     
     public double getRadius() {
-        return radius;
+        return c3.getRadius();
     }
     
-    public double getCircumference() {
-        return radius*2*Math.PI;
+    public double getHeight() {
+        return height;
     }
     
-    public double getArea() {
-        return radius*radius*Math.PI;
+    public double surfaceArea() {
+      return c3.getArea()*2 + c3.getCircumference()*height;  
+    }
+    
+    public double volume() {
+      return c3.getRadius()*c3.getRadius()*Math.PI*height;
     }
 }
