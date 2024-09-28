@@ -10,7 +10,7 @@ public class Formulas  {
     public double findSlope (OrderedPair p1, OrderedPair p2) {
         double xs = (p2.x-p1.x)/2;
         double ys = (p2.y-p1.y)/2;
-        return (xs/ys);
+        return (ys/xs);
     }
     
     public OrderedPair findMidpoint(OrderedPair p1, OrderedPair p2) {
@@ -27,5 +27,9 @@ public class Formulas  {
     public double findGeometricSeriesSum (double a, double r, int k) {
         double sum = a*((1-Math.pow(r,k))/(1-r));
         return sum;
+    }
+    
+    public int rollDie (int sides) {
+        return (int) (Math.random()*sides)+1;
     }
 }
