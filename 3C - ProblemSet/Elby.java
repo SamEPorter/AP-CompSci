@@ -24,11 +24,11 @@ public class Elby {
 
   // Refinement--make sure the goal isn't part of a word
   while (goalPos >= 0) {
-     	// Find the string of length 1 before and after the word
-     	String before = " ", after = " ";
+         // Find the string of length 1 before and after the word
+         String before = " ", after = " ";
 
-     	if (goalPos > 0) {
-     	   before = phrase.substring(goalPos - 1, goalPos);
+         if (goalPos > 0) {
+            before = phrase.substring(goalPos - 1, goalPos);
       }
 
       if (goalPos + goal.length() < phrase.length()) {
@@ -50,13 +50,72 @@ public class Elby {
    return -1;
 }
 
+public String transformYouMeStatement(String statement) {
+    	//Remove the final period, if there is one
+    	statement = statement.trim();
+    	String lastChar = statement.substring(statement.length() - 1);
+    	if (lastChar.equals(".")) {
+        	statement = statement.substring(0, statement.length() - 1);
+    	}
+
+    	int posOfYou = findKeyword(statement, "you", 0);
+    	int posOfMe  = findKeyword(statement, "me",  posOfYou + 3);
+
+    	String restOfStatement = statement.substring(posOfYou + 3, posOfMe).trim();
+    	return "What makes you think that I " + restOfStatement + " you?";
+}
+
+public String transformIWantToStatement(String statement) {
+    	//Remove the final period, if there is one
+    	statement = statement.trim();
+    	String lastChar = statement.substring(statement.length() - 1);
+    	if (lastChar.equals(".")) {
+        	statement = statement.substring(0, statement.length() - 1);
+    	}
+    	int pos = findKeyword(statement, "I want to", 0);
+    	String restOfStatement = statement.substring(pos + 9).trim();
+    	return "What would it mean to " + restOfStatement + "?";
+}
+
+public String transformIWantStatement(String statement){
+   //Remove the final period, if there is one
+    	statement = statement.trim();
+    	String lastChar = statement.substring(statement.length() - 1);
+    	if (lastChar.equals(".")) {
+        	statement = statement.substring(0, statement.length() - 1);
+    	}
+    	int pos = findKeyword(statement, "I want", 0);
+    	String restOfStatement = statement.substring(pos + 6).trim();	
+        return "Would you really be happy if you had "+ restOfStatement + "?";
+}
+
+public String transformIMeStatement(String statement) {
+    	statement = statement.trim();
+    	String lastChar = statement.substring(statement.length() - 1);
+    	if (lastChar.equals(".")) {
+        	statement = statement.substring(0, statement.length() - 1);
+    	}
+    	int pos = findKeyword(statement, "I", 0);
+    	int pos2 = findKeyword(statement, "you", 0);
+    	String restOfStatement = statement.substring(pos + 1, pos2).trim();	
+        return "Why do you "+ restOfStatement + " me?";
+    	//return "Why do you...";
+}
+
     
     public String getResponse(String statement) {
         String response = "";
         
         
-        
-        if (findKeyword(statement, "cat", 0) >= 0 || findKeyword(statement, "dog", 0) >= 0)  {
+        if (findKeyword(statement, "you", 0) >= 0 && findKeyword(statement, "you", 0) < findKeyword(statement, "me", 0)) {
+            response = transformYouMeStatement(statement);
+        } else if (findKeyword(statement, "I", 0) >= 0 && findKeyword(statement, "I", 0) < findKeyword(statement, "you", 0))  {
+            response = transformIMeStatement(statement);       
+        } else if (findKeyword(statement, "I want to", 0) >= 0) {
+            response = transformIWantToStatement(statement);       
+        } else if (findKeyword(statement, "I want", 0) >= 0) {
+            response = transformIWantStatement(statement);       
+        } else if (findKeyword(statement, "cat", 0) >= 0 || findKeyword(statement, "dog", 0) >= 0)  {
             response = "Tell me more about your pets";
         } else if (findKeyword(statement, "mother", 0) >= 0 
         || findKeyword(statement, "father", 0) >= 0 
